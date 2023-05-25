@@ -10,6 +10,7 @@ export const UserDetails = ({
   updatedAt,
   phoneNumber,
   address,
+  onClose,
 }) => {
   return (
     <div className="overlay">
@@ -18,7 +19,7 @@ export const UserDetails = ({
         <div className="detail-container">
           <header className="headers">
             <h2>User Detail</h2>
-            <button className="btn close">
+            <button className="btn close" onClick={onClose}>
               <svg
                 aria-hidden="true"
                 focusable="false"

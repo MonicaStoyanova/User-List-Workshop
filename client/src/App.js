@@ -25,13 +25,53 @@ function App() {
       });
   }, []);
 
+  // we will look into Reacts' way to deal with forms in the future, here we will use out DOM knowledge
+  const onUserCreateSubmit = async (e) => {
+    e.preventDefault();
+
+    const formatData = new FormData(e.currentTarget);
+
+    const data = Object.fromEntries(formatData); // it comes from the DOM not from Reacts' virtual DOM
+
+    //send ajax request to server
+    const createdUser = await userService.create(data);
+
+    //if successfull add new user to the state
+    setUsers((state) => [...state, createdUser]);
+
+    //close dialog: it happens in UserList file
+  };
+
+  const onUserUpdateSubmit = async (e, userId) => {
+    e.preventDefault();
+
+    const formatData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formatData);
+
+    const updatedUser = await userService.update(userId, data);
+
+    setUsers((state) => state.map((x) => (x._id === userId ? updatedUser : x)));
+  };
+
+  const onUserDelete = async (userId) => {
+    //delete from server
+    await userService.remove(userId);
+    //delete from state
+    setUsers((state) => state.filter((x) => x._id !== userId));
+  };
+
   return (
     <Fragment>
       <Header />
       <main className="main">
         <section className="card users-container">
           <Search />
-          <UserList users={users} />
+          <UserList
+            users={users}
+            onUserCreateSubmit={onUserCreateSubmit}
+            onUserUpdateSubmit={onUserUpdateSubmit}
+            onUserDelete={onUserDelete}
+          />
         </section>
       </main>
       <Footer />

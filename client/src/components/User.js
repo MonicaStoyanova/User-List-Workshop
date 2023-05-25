@@ -9,6 +9,8 @@ export const User = ({
   createdAt,
   phoneNumber,
   onInfoClick,
+  onDeleteClick,
+  onEditClick,
 }) => {
   return (
     <tr>
@@ -26,7 +28,11 @@ export const User = ({
       <td>{formatDate(createdAt)}</td>
 
       <td className="actions">
-        <button className="btn edit-btn" title="Edit">
+        <button
+          className="btn edit-btn"
+          title="Edit"
+          onClick={() => onEditClick(_id)}
+        >
           <svg
             aria-hidden="true"
             focusable="false"
@@ -43,7 +49,11 @@ export const User = ({
             ></path>
           </svg>
         </button>
-        <button className="btn delete-btn" title="Delete">
+        <button
+          className="btn delete-btn"
+          title="Delete"
+          onClick={() => onDeleteClick(_id)}
+        >
           <svg
             aria-hidden="true"
             focusable="false"
