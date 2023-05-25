@@ -1,27 +1,29 @@
+import { formatDate } from "../utils/dateUtils";
+
 export const User = ({
+  _id,
   firstName,
   lastName,
   email,
   imageUrl,
   createdAt,
   phoneNumber,
-  updatedAt,
-  _id,
+  onInfoClick,
 }) => {
   return (
     <tr>
       <td>
         <img
-          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-          alt="Peter's profile"
+          src={imageUrl}
+          alt={`${firstName} ${lastName}`}
           className="image"
         />
       </td>
-      <td>Peter</td>
-      <td>Johnson</td>
-      <td>peter@abv.bg</td>
-      <td>0812345678</td>
-      <td>June 28, 2022</td>
+      <td>{firstName}</td>
+      <td>{lastName}</td>
+      <td>{email}</td>
+      <td>{phoneNumber}</td>
+      <td>{formatDate(createdAt)}</td>
 
       <td className="actions">
         <button className="btn edit-btn" title="Edit">
@@ -58,7 +60,11 @@ export const User = ({
             ></path>
           </svg>
         </button>
-        <button className="btn info-btn" title="Info">
+        <button
+          className="btn info-btn"
+          title="Info"
+          onClick={() => onInfoClick(_id)}
+        >
           <svg
             aria-hidden="true"
             focusable="false"
